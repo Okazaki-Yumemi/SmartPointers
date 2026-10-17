@@ -191,10 +191,10 @@ SharedPtr<T>:: SharedPtr(SharedPtr&& tmp) noexcept:ptr(tmp.ptr),cnt(tmp.cnt) {
 
 template <typename T>
 SharedPtr<T>::SharedPtr(UniquePtr<T>& tmp): ptr(nullptr), cnt(nullptr) {
-    if (tmp.get() != nullptr) {
-        cnt = new int(1);
-        ptr = tmp.release();
-    }
+  if (tmp.get() != nullptr) {
+      cnt = new int(1);
+      ptr = tmp.release();
+  }
 }
 
 

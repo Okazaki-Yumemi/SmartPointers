@@ -1,16 +1,21 @@
-#include<bits/stdc++.h>
-#include "Unique_ptr.hpp"
-#include "Shared_ptr.hpp"
-int main(){
-    // Test 1: 移动构造
-    UniquePtr<int> a(new int(42));
-    UniquePtr<int> b(std::move(a));
-
-    // 应满足：a.get() == nullptr，*b == 42
+#include <cassert>
+#include "Shared_ptr2.hpp"
 
 
-    assert(a.get() == nullptr);
+int main() {
+    SharedPtr<int> a(new int(42));
+    SharedPtr<int> b;
+
+    b = a;
+    assert(a.use_count() == 2);
+    assert(b.use_count() == 2);
+
+    a.reset();
+    assert(a.use_count() == 0);
+    assert(b.use_count() == 1);
     assert(*b == 42);
 
-    return 0;
+    b.reset(nullptr);
+    assert(!b);
+    assert(b.use_count() == 0);
 }
