@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 #include "Unique_ptr.hpp"
-
+#include "Shared_ptr.hpp"
 int main(){
     // Test 1: 移动构造
     UniquePtr<int> a(new int(42));
