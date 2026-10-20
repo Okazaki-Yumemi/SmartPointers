@@ -1,21 +1,26 @@
 #include <cassert>
-#include "Shared_ptr2.hpp"
-
+#include "Weak_ptr.hpp"
 
 int main() {
-    SharedPtr<int> a(new int(42));
-    SharedPtr<int> b;
+    SharedPtr<int> sp(new int(42));
 
-    b = a;
-    assert(a.use_count() == 2);
-    assert(b.use_count() == 2);
+    WeakPtr<int> wp(sp);
+    assert(wp.use_count() == 1);
+    assert(!wp.expired());
 
-    a.reset();
-    assert(a.use_count() == 0);
-    assert(b.use_count() == 1);
-    assert(*b == 42);
+    {
+        SharedPtr<int> sp2 = wp.lock();
+        assert(sp2.use_count() == 2);
+        assert(*sp2 == 42);
+    }
 
-    b.reset(nullptr);
-    assert(!b);
-    assert(b.use_count() == 0);
+    assert(wp.use_count() == 1);
+
+    sp.reset();
+
+    assert(wp.use_count() == 0);
+    assert(wp.expired());
+    assert(!wp.lock());
+
+    wp.reset();
 }

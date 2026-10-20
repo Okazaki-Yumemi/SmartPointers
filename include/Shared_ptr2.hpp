@@ -3,7 +3,6 @@
 #include <utility>
 
 template <typename T>
-
 class UniquePtr {
   private:
     // Add whatever you want to add.
